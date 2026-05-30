@@ -1,6 +1,7 @@
 # Lean / Lake build artifacts
 /TwoGenie/.lake/
-/TwoGenie/lake-manifest.json
+# Note: lake-manifest.json IS committed — it pins the exact mathlib revision
+# so the build is reproducible (and CI/lean-action requires it).
 # Project-local toolchain (isolated install; regenerate via setup.sh)
 /.elan/
 # Python venv for Phase-4 plotting

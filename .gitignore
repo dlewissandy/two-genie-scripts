@@ -12,7 +12,6 @@ venv/
 # Lean / Lake build artifacts
 formalization/.elan/
 formalization/TwoGenie/.lake/
-formalization/TwoGenie/lake-manifest.json
 formalization/TwoGenie/figures/
 formalization/TwoGenie/checks-axioms.txt
 
