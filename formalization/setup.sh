@@ -7,10 +7,11 @@ HERE="$(cd "$(dirname "$0")" && pwd)"
 export ELAN_HOME="$HERE/.elan"
 export PATH="$ELAN_HOME/bin:$PATH"
 cd "$HERE/TwoGenie"
-echo "[1/3] installing pinned toolchain leanprover/lean4:v4.29.0"
+echo "[1/2] installing pinned toolchain leanprover/lean4:v4.29.0"
 elan toolchain install leanprover/lean4:v4.29.0
-echo "[2/3] lake update (resolving mathlib + transitive deps)"
-lake update
-echo "[3/3] lake exe cache get (downloading compiled mathlib oleans)"
+# NOTE: deliberately no `lake update` — the committed lake-manifest.json pins the
+# exact mathlib revision, and `lake update` would re-resolve to newer deps and
+# break reproducibility. `lake exe cache get` materializes the pinned deps.
+echo "[2/2] lake exe cache get (downloading compiled mathlib oleans for the pinned revision)"
 lake exe cache get
-echo "SETUP_DONE_OK"
+echo "SETUP_DONE_OK — now run ./b.sh (or 'lake build') to build."

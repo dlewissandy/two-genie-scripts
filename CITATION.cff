@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+message: "If you use this software or its results, please cite both the software (below) and the accompanying paper (see preferred-citation)."
+title: "Two Genie Game — Lean 4 formalization and figure scripts"
+abstract: >-
+  Mechanically-checked (sorry-free) Lean 4 proofs of the theorems in
+  "Accessibility and Favorability of Cooperative Basins in the Two Genie Game",
+  together with the Python scripts that generate the paper's figures.
+type: software
+authors:
+  - family-names: Lewis-Sandy
+    given-names: Darrell
+version: "1.0.0"
+date-released: "2026-05-30"
+license: MIT
+url: "https://github.com/dlewissandy/two-genie-scripts"
+repository-code: "https://github.com/dlewissandy/two-genie-scripts"
+keywords:
+  - Lean 4
+  - formal verification
+  - evolutionary game theory
+  - AI alignment
+  - cooperative basins
+preferred-citation:
+  type: article
+  title: "Accessibility and Favorability of Cooperative Basins in the Two Genie Game"
+  authors:
+    - family-names: Lewis-Sandy
+      given-names: Darrell
+  year: 2026
+  notes: "Manuscript; update with venue/DOI on publication."
