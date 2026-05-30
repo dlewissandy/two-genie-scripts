@@ -1,0 +1,11 @@
+# Lean / Lake build artifacts
+/TwoGenie/.lake/
+/TwoGenie/lake-manifest.json
+# Project-local toolchain (isolated install; regenerate via setup.sh)
+/.elan/
+# Python venv for Phase-4 plotting
+/.venv/
+# Generated figures / data
+/TwoGenie/figures/
+# Logs
+*.log

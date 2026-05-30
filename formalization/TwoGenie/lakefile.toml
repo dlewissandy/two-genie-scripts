@@ -1,0 +1,16 @@
+name = "TwoGenie"
+defaultTargets = ["TwoGenie"]
+
+# Literate Lean 4 formalization of
+#   "Accessibility and Favorability of Cooperative Basins in the Two Genie Game"
+# Depends on mathlib only (NOT CSLib): the speculative CSLib dependency in the
+# plan is needed solely for Proposition 5.4's Laplace/Kramers asymptotic, which
+# we discharge here via the plan's documented fallback (see Accessibility.lean).
+
+[[require]]
+name = "mathlib"
+git = "https://github.com/leanprover-community/mathlib4"
+rev = "v4.29.0"
+
+[[lean_lib]]
+name = "TwoGenie"

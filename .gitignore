@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Generated figure outputs (reproduce by running the scripts)
+*.png
+*.pdf
+*.csv
+
+# Lean / Lake build artifacts
+formalization/.elan/
+formalization/TwoGenie/.lake/
+formalization/TwoGenie/lake-manifest.json
+formalization/TwoGenie/figures/
+formalization/TwoGenie/checks-axioms.txt
+
+# OS
+.DS_Store
+*.log

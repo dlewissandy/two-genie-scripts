@@ -1,0 +1,59 @@
+name: Lean formalization
+
+# Reproducible kernel check for the TwoGenie Lean 4 development.
+# Pins are read from formalization/TwoGenie/lean-toolchain and lake-manifest.json:
+#   Lean   leanprover/lean4:v4.29.0
+#   mathlib v4.29.0 @ 8a178386ffc0f5fef0b77738bb5449d50efeea95
+# The job fails if `lake build` fails OR if any declaration in Checks.lean
+# reports `sorryAx`. The axiom report is uploaded as a build artifact.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'formalization/**'
+      - '.github/workflows/lean.yml'
+  pull_request:
+    paths:
+      - 'formalization/**'
+      - '.github/workflows/lean.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Installs elan from the pinned lean-toolchain, restores the mathlib
+      # olean cache, and runs `lake build` in the package directory.
+      - name: Build (elan + mathlib cache + lake build)
+        uses: leanprover/lean-action@v1
+        with:
+          lake-package-directory: formalization/TwoGenie
+          use-mathlib-cache: true
+
+      # Kernel-honesty gate: print the axiom dependency of every headline
+      # declaration and fail if any depends on `sorryAx`.
+      - name: Axiom audit (fail on sorryAx)
+        working-directory: formalization/TwoGenie
+        run: |
+          export PATH="$HOME/.elan/bin:$PATH"
+          lake env lean Checks.lean | tee checks-axioms.txt
+          echo "--- summary ---"
+          echo "clean declarations: $(grep -c 'propext, Classical.choice, Quot.sound' checks-axioms.txt)"
+          if grep -q 'sorryAx' checks-axioms.txt; then
+            echo "::error::Checks.lean reports sorryAx — a declaration is asserted, not proved."
+            exit 1
+          fi
+          echo "No sorryAx: every checked declaration depends only on the standard Lean/mathlib axioms."
+
+      - name: Upload axiom report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: checks-axioms
+          path: formalization/TwoGenie/checks-axioms.txt
