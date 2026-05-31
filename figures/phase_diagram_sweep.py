@@ -95,14 +95,14 @@ def main():
                             color=ROW_TAGCOLOR[r])
 
     legend = [
-        Patch(facecolor='#dbecda', edgecolor='gray', label=r'$G_2$-favored basin'),
-        Patch(facecolor='#fdf0c9', edgecolor='gray', label=r'$G_1$-favored'),
+        Patch(facecolor='#dbecda', edgecolor='gray', label=r'cooperative basin ($G_2$ wins)'),
+        Patch(facecolor='#fdf0c9', edgecolor='gray', label=r'$G_1$ wins (bistable)'),
         Patch(facecolor='#fad9d9', edgecolor='gray', label=r'no stable $G_2$ corner'),
-        Line2D([0], [0], color='#b21e3a', lw=2.2, label=r'$\pi_{\mathrm{high}}=0$'),
-        Line2D([0], [0], color='#1f4e9b', lw=2.2, ls='--', label=r'$\pi_{\mathrm{bind}}=0$'),
-        Line2D([0], [0], color='#6a3d9a', lw=0.8, ls=':', label=r'$\chi^*$ level sets'),
+        Line2D([0], [0], color='#b21e3a', lw=2.2, label=r'$\pi_{\mathrm{high}}=0$: corner edge'),
+        Line2D([0], [0], color='#1f4e9b', lw=2.2, ls='--', label=r'$\pi_{\mathrm{bind}}=0$: basin frontier'),
+        Line2D([0], [0], color='#6a3d9a', lw=0.8, ls=':', label=r'$\chi^*$ isoclines'),
     ]
-    fig.legend(handles=legend, loc='lower center', ncol=6, fontsize=9,
+    fig.legend(handles=legend, loc='lower center', ncol=3, fontsize=9,
                framealpha=0.95, bbox_to_anchor=(0.5, 0.005))
     fig.subplots_adjust(left=0.13, right=0.98, top=0.955, bottom=0.07, wspace=0.20, hspace=0.22)
 

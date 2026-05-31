@@ -208,13 +208,13 @@ def build_grid():
 
   # --- Shared legend + figure title ------------------------------------------------
   legend_elems = [
-      Patch(facecolor='#dbecda', edgecolor='gray', label=r'(C) holds: $G_2$-favored'),
-      Patch(facecolor='#fdf0c9', edgecolor='gray', label=r'(C) fails: $G_1$-favored'),
-      Patch(facecolor='#fad9d9', edgecolor='gray', label=r'(B-high) fails: no corner'),
-      Line2D([0], [0], color='#b21e3a', linewidth=2.2, label=r'$\pi_{\mathrm{high}}=0$ (endpoint-high)'),
-      Line2D([0], [0], color='#1f4e9b', linewidth=2.2, linestyle='--', label=r'$\pi_{\mathrm{bind}}=0$ (CSP)'),
-      Line2D([0], [0], color='#6a3d9a', linewidth=2.2, linestyle=':', label=r'$\chi^*=1/2$'),
-      Line2D([0], [0], color='#6a3d9a', linewidth=0.8, linestyle=':', label=r'$\chi^*$ level sets'),
+      Patch(facecolor='#dbecda', edgecolor='gray', label=r'cooperative basin ($G_2$ wins)'),
+      Patch(facecolor='#fdf0c9', edgecolor='gray', label=r'$G_1$ wins (bistable)'),
+      Patch(facecolor='#fad9d9', edgecolor='gray', label=r'no stable $G_2$ corner'),
+      Line2D([0], [0], color='#b21e3a', linewidth=2.2, label=r'$\pi_{\mathrm{high}}=0$: corner edge'),
+      Line2D([0], [0], color='#1f4e9b', linewidth=2.2, linestyle='--', label=r'$\pi_{\mathrm{bind}}=0$: basin frontier'),
+      Line2D([0], [0], color='#6a3d9a', linewidth=2.2, linestyle=':', label=r'$\chi^*=1/2$ limit'),
+      Line2D([0], [0], color='#6a3d9a', linewidth=0.8, linestyle=':', label=r'$\chi^*$ isoclines'),
       Line2D([0], [0], color='gray', linewidth=0.8, label=r'equal scales $G_2=G_1$'),
   ]
   fig.legend(handles=legend_elems, loc='lower center', ncol=4, fontsize=9,
