@@ -141,6 +141,7 @@ open TwoGenie
 #print axioms max_logPprod_le_cdepth    -- **#3** ∀ k<Nc, log P_k ≤ (Nc/η_s)c_depth(χ*)+L/η_s (justifies the ceiling)
 #print axioms fixation_log_rate_cdepth_le -- **#1** ceiling with NO hUpper: log(Σ) ≤ (Nc/η_s)c_depth(χ*)+L/η_s+log(Nc−1)
 #print axioms accessible_and_favored    -- **#8 CAPSTONE**: favored ∧ reachable, no hidden bridges
+#print axioms accessible_and_favored_depletion -- depletion-deadline form: Tten := τ_{S=0}=(S₀−S_min)/(c̄·Nc·λ_a)
 #print axioms window_nonempty_iff_seed_rate -- **#3** window non-empty ⟺ λ_seed ≥ exp(c_depth·floor/η_s)/T
 #print axioms prop54_log                -- **Prop 5.4** log-linearization (Kramers form as hypothesis)
 #print axioms cdepth_pos_of_threshold_root -- strict barrier c_depth>0 derived from IsThresholdRoot

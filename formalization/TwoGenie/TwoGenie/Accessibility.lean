@@ -552,4 +552,27 @@ theorem accessible_and_favored (Fdelta : ℝ → ℝ) (hcont : Continuous Fdelta
   have := Real.exp_le_exp.mpr hlog
   rwa [Real.exp_log hSpos, Real.exp_log hTls] at this
 
+/-- **Attainability against resource depletion.** The capstone `accessible_and_favored`
+with the free horizon `Tten` instantiated as the resource-pool depletion time
+`(S0 - Smin) / (cbar * Nc * lambda_a)` of the negative-sum game. This is the exact form of
+the manuscript's basin-attainability theorem after the tenure→depletion remodeling: a
+community fixates before the shared pool empties precisely when its size clears the
+favoredness floor and the barrier budget fits under the depletion deadline. The deadline is
+a value substituted into the universally-quantified `Tten`, so this inherits the axiom base
+of `accessible_and_favored` with no new proof obligation. -/
+theorem accessible_and_favored_depletion (Fdelta : ℝ → ℝ) (hcont : Continuous Fdelta)
+    (hC : CondC Fdelta) {L : ℝ} (hL : 0 ≤ L) (hLip : ∀ x y, |Fdelta x - Fdelta y| ≤ L * |x - y|)
+    {chistar : ℝ} (hRoot : IsThresholdRoot Fdelta chistar) (hchi : chistar < 1 / 2)
+    {Nc : ℕ} (hNc : 2 ≤ Nc) {etas : ℝ} (hetas : 0 < etas)
+    {S0 Smin cbar lambda_a lseed : ℝ}
+    (hdep : 0 < (S0 - Smin) / (cbar * (Nc : ℝ) * lambda_a) * lseed)
+    (hfloor : 1 / (1 / 2 - chistar) < (Nc : ℝ))
+    (hseed : ((Nc : ℝ) / etas) * cdepth Fdelta chistar + L / etas + Real.log ((Nc : ℝ) - 1)
+        ≤ Real.log ((S0 - Smin) / (cbar * (Nc : ℝ) * lambda_a) * lseed)) :
+    (0 < ∑ j ∈ Finset.Ico 1 Nc, Fdelta ((j : ℝ) / Nc))
+      ∧ (∑ k ∈ Finset.Ico 1 Nc, Pprod Nc etas Fdelta k)
+          ≤ (S0 - Smin) / (cbar * (Nc : ℝ) * lambda_a) * lseed :=
+  accessible_and_favored (Tten := (S0 - Smin) / (cbar * (Nc : ℝ) * lambda_a)) (lseed := lseed)
+    Fdelta hcont hC hL hLip hRoot hchi hNc hetas hdep hfloor hseed
+
 end TwoGenie
