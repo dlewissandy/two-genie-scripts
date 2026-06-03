@@ -39,8 +39,8 @@ FAM = pg.FAMILIES[0]                       # Hill
 A, B = 0.8, 0.3
 NGRID = 200
 
-# exact scheme of phase_diagram_grid
-REGION_CMAP = ListedColormap(['#fad9d9', '#fdf0c9', '#dbecda'])  # red, amber, green
+# exact scheme of phase_diagram_grid (fills + grayscale/colorblind hatches)
+REGION_CMAP = pg.REGION_CMAP
 
 
 def d_of_theta(theta):
@@ -67,6 +67,8 @@ def main():
             region[(phi_b >= 0)] = 2
             ax.imshow(region, origin='lower', extent=[lo, hi, lo, hi], cmap=REGION_CMAP,
                       vmin=-0.5, vmax=2.5, aspect='auto', alpha=0.6)
+            ax.contourf(XG2, XG1, region, levels=[-0.5, 0.5, 1.5, 2.5],
+                        colors='none', hatches=pg.REGION_HATCHES)
 
             ax.contour(XG2, XG1, phi_h, levels=[0], colors='#b21e3a', linewidths=2.2)
             ax.contour(XG2, XG1, phi_b, levels=[0], colors='#1f4e9b', linewidths=2.2, linestyles='--')
@@ -96,8 +98,8 @@ def main():
 
     legend = [
         Patch(facecolor='#dbecda', edgecolor='gray', label=r'cooperative basin ($G_2$ wins)'),
-        Patch(facecolor='#fdf0c9', edgecolor='gray', label=r'$G_1$ wins (bistable)'),
-        Patch(facecolor='#fad9d9', edgecolor='gray', label=r'no stable $G_2$ corner'),
+        Patch(facecolor='#fdf0c9', edgecolor='gray', hatch='//', label=r'$G_1$ wins (bistable)'),
+        Patch(facecolor='#fad9d9', edgecolor='gray', hatch='xxx', label=r'no stable $G_2$ corner'),
         Line2D([0], [0], color='#b21e3a', lw=2.2, label=r'$\pi_{\mathrm{high}}=0$: corner edge'),
         Line2D([0], [0], color='#1f4e9b', lw=2.2, ls='--', label=r'$\pi_{\mathrm{bind}}=0$: basin frontier'),
         Line2D([0], [0], color='#6a3d9a', lw=0.8, ls=':', label=r'$\chi^*$ isoclines'),

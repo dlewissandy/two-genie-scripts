@@ -40,6 +40,16 @@ from matplotlib.patches import Patch
 from scipy.optimize import brentq
 import os
 
+# --- Region palette: light fills (preserve contour contrast) + grayscale/colorblind
+# hatches. Index = region code: 0 no stable G2 corner, 1 G1 wins (bistable), 2 basin.
+# The hatch is the channel that survives B&W and colour-vision deficiency; the three
+# light fills collapse to near-identical grey, so distinction must not rest on hue.
+REGION_FILLS = ['#fad9d9', '#fdf0c9', '#dbecda']   # red, amber, green
+REGION_HATCHES = ['xxx', '//', '']                 # crosshatch / diagonal / clean
+REGION_CMAP = ListedColormap(REGION_FILLS)
+plt.rcParams['hatch.color'] = '#6f6f6f'
+plt.rcParams['hatch.linewidth'] = 0.5
+
 ALPHA = 2.0   # tail index for the non-Hill families; matched to Hill n = 2
 N_HILL = 2    # Hill exponent
 D = 1.0       # audit substrate level, common to all panels
@@ -161,7 +171,6 @@ def _self_check():
 
 def build_grid():
   # --- Build the 4 x 3 grid --------------------------------------------------------
-  REGION_CMAP = ListedColormap(['#fad9d9', '#fdf0c9', '#dbecda'])  # red, amber, green
   NGRID = 200
 
   fig, axes = plt.subplots(len(FAMILIES), len(PARAMS), figsize=(9.5, 12.6))
@@ -181,6 +190,8 @@ def build_grid():
         region[(phi_b >= 0)] = 2
         ax.imshow(region, origin='lower', extent=[lo, hi, lo, hi],
                   cmap=REGION_CMAP, vmin=-0.5, vmax=2.5, aspect='auto', alpha=0.6)
+        ax.contourf(XG2, XG1, region, levels=[-0.5, 0.5, 1.5, 2.5],
+                    colors='none', hatches=REGION_HATCHES)
 
         ax.contour(XG2, XG1, phi_h, levels=[0], colors='#b21e3a', linewidths=2.2)
         ax.contour(XG2, XG1, phi_b, levels=[0], colors='#1f4e9b',
@@ -209,8 +220,8 @@ def build_grid():
   # --- Shared legend + figure title ------------------------------------------------
   legend_elems = [
       Patch(facecolor='#dbecda', edgecolor='gray', label=r'cooperative basin ($G_2$ wins)'),
-      Patch(facecolor='#fdf0c9', edgecolor='gray', label=r'$G_1$ wins (bistable)'),
-      Patch(facecolor='#fad9d9', edgecolor='gray', label=r'no stable $G_2$ corner'),
+      Patch(facecolor='#fdf0c9', edgecolor='gray', hatch='//', label=r'$G_1$ wins (bistable)'),
+      Patch(facecolor='#fad9d9', edgecolor='gray', hatch='xxx', label=r'no stable $G_2$ corner'),
       Line2D([0], [0], color='#b21e3a', linewidth=2.2, label=r'$\pi_{\mathrm{high}}=0$: corner edge'),
       Line2D([0], [0], color='#1f4e9b', linewidth=2.2, linestyle='--', label=r'$\pi_{\mathrm{bind}}=0$: basin frontier'),
       Line2D([0], [0], color='#6a3d9a', linewidth=2.2, linestyle=':', label=r'$\chi^*=1/2$ limit'),
